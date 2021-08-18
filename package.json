@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@notionhq/client": "^0.2.3",
+    "dotenv": "^9.0.0",
+    "nlcst-to-string": "^2.0.4",
+    "node-telegram-bot-api": "^0.52.0",
+    "notion-api-js": "^2.4.0",
+    "notion-node": "^0.1.1",
+    "retext": "^7.0.1",
+    "retext-keywords": "^6.0.0",
+    "retext-pos": "^3.0.0",
+    "to-vfile": "^7.1.0"
+  }
+}
