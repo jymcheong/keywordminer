@@ -88,6 +88,12 @@ const test = async () => {
 
 //getAllPages()
 
-setInterval(()=>{ getAllPages() }, 20000)
+// setInterval(()=>{ getAllPages() }, 20000)
 
 //test()
+
+(async () => {
+    const odb = new (require('./odb').Odb)();
+    var odbSession = await odb.startSession()
+    console.log(odbSession)
+})()
