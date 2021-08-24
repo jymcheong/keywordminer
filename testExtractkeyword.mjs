@@ -11,8 +11,25 @@ var doc = 'Node.js and MySQL is one of the necessary binding needed for any web 
 retext()
   .use(pos) // Make sure to use `retext-pos` before `retext-keywords`.
   .use(keywords)
-  .process(doc, done) // works on text block too
   //.process(toVFile.readSync('example.txt'), done)
+  .process(doc) // works on text block too
+  .then((file) => {
+    console.log('Keywords:')
+    file.data.keywords.forEach(function(keyword) {
+      console.log("\t" + toString(keyword.matches[0].node))
+    })
+
+    console.log()
+    console.log('Key-phrases:')
+    file.data.keyphrases.forEach(function(phrase) {
+      let p = phrase.matches[0].nodes.map(stringify).join('')
+      if(p.indexOf(' ') > 0) console.log("\t" + p)
+      function stringify(value) {
+        return toString(value)
+      }
+    })
+  })
+  
 
 function done(err, file) {
   if (err) throw err
