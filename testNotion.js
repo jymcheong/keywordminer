@@ -93,11 +93,15 @@ const test = async () => {
     console.log(t)
 }
 
+async function newPageHandler(newEvent) {
+    console.log('operation: ' + newEvent['operation'])
+    if(newEvent['operation'] != 1) return;
+}
+
 (async () => {
     const odb = new (require('./odb').Odb)();
     odbSession = await odb.startSession()
     console.log("ODB session started!")
+    odb.startLiveQuery("select from Entry", newPageHandler)
     setInterval(()=>{ PollPages() }, 20000)
 })()
-
-
