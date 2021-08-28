@@ -59,7 +59,7 @@ class Odb {
 
     async startLiveQuery(statement, eventHandler){
         if(this.session == null) await this.startSession();
-        console.log('session opened')
+        console.log('Live Query started')
         this.handle = await this.session.liveQuery(statement)
         .on("data", data => {
             eventHandler(data)

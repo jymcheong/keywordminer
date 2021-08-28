@@ -94,8 +94,8 @@ const test = async () => {
 }
 
 async function newPageHandler(newEvent) {
-    console.log('operation: ' + newEvent['operation'])
-    if(newEvent['operation'] != 1) return;
+    // only interested in CREATED event ie. operations = 1
+    if(newEvent['operation'] != 1) return; 
 }
 
 (async () => {
