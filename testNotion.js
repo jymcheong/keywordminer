@@ -7,6 +7,7 @@ require('dotenv').config();
 
 var g_PageIDs = {}
 var g_PageQ = []
+var odbSession = null
 
 const notion = new Client({
     auth: process.env.NOTION_API_TOKEN
@@ -38,12 +39,14 @@ const trackPageIDs = async (pages) => {
         let p = pages[i]
         delete p.properties
         delete p.parent
-        console.log(JSON.stringify(p))
+        delete p.icon
+        delete p.cover        
+        odbSession.command('UPDATE Entry MERGE ' + JSON.stringify(p) + ' UPSERT WHERE id = "' + p.id + '"')
     }
     console.log('total id: ' + Object.keys(g_PageIDs).length)
 }
 
-const getAllPages = async () => {
+const PollPages = async () => {
     let data = await notion.databases.query({
         database_id: process.env.DB_ID
     });
@@ -90,17 +93,11 @@ const test = async () => {
     console.log(t)
 }
 
-//getAllPages()
-var odbSession = null
 (async () => {
     const odb = new (require('./odb').Odb)();
     odbSession = await odb.startSession()
     console.log("ODB session started!")
-    setInterval(()=>{ getAllPages() }, 20000)
+    setInterval(()=>{ PollPages() }, 20000)
 })()
-
-
-
-//test()
 
 
