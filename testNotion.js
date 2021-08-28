@@ -35,6 +35,10 @@ const trackPageIDs = async (pages) => {
         g_PageIDs[pages[i].id] = 1
         g_PageQ.push(pages[i].id)
         console.log('enQ ' + pages[i].id)
+        let p = pages[i]
+        delete p.properties
+        delete p.parent
+        console.log(JSON.stringify(p))
     }
     console.log('total id: ' + Object.keys(g_PageIDs).length)
 }
@@ -87,13 +91,16 @@ const test = async () => {
 }
 
 //getAllPages()
+var odbSession = null
+(async () => {
+    const odb = new (require('./odb').Odb)();
+    odbSession = await odb.startSession()
+    console.log("ODB session started!")
+    setInterval(()=>{ getAllPages() }, 20000)
+})()
 
-// setInterval(()=>{ getAllPages() }, 20000)
+
 
 //test()
 
-(async () => {
-    const odb = new (require('./odb').Odb)();
-    var odbSession = await odb.startSession()
-    console.log(odbSession)
-})()
+
