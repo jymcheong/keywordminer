@@ -3,6 +3,7 @@
  * npm install dotenv
  */
 const { Client } = require('@notionhq/client');
+const extractor = require('./extractor.js');
 require('dotenv').config();
 
 var g_PageIDs = {}
@@ -96,6 +97,9 @@ const test = async () => {
 async function newPageHandler(newEvent) {
     // only interested in CREATED event ie. operations = 1
     if(newEvent['operation'] != 1) return; 
+    // TODO
+    // - use page id, getPage
+    // - extract words from getPage content 
 }
 
 (async () => {
@@ -104,7 +108,7 @@ async function newPageHandler(newEvent) {
     console.log("ODB session started!")
     odb.startLiveQuery("select from Entry", newPageHandler)
     setInterval(()=>{ PollPages() }, 20000) */
-    const extractor = require('./extractor.js');
+    
     let words = await extractor.extract("Tissue adhesives do not normally perform well on tissues that are covered with blood or other bodily fluids. Here we report the design, adhesion mechanism and performance of a paste that haemostatically seals tissues in less than 15 s, independently of the blood-coagulation rate. With a design inspired by barnacle glue (which strongly adheres to wet and contaminated surfaces owing to adhesive proteins embedded in a lipid-rich matrix), the paste consists of a blood-repelling hydrophobic oil matrix containing embedded microparticles that covalently crosslink with tissue surfaces on the application of gentle pressure. It slowly resorbs over weeks, sustains large pressures (approximately 350 mm Hg of burst pressure in a sealed porcine aorta), makes tough (interfacial toughness of 150–300 J m−2) and strong (shear and tensile strengths of, respectively, 40–70 kPa and 30–50 kPa) interfaces with blood-covered tissues, and outperforms commercial haemostatic agents in the sealing of bleeding porcine aortas ex vivo and of bleeding heart and liver tissues in live rats and pigs. The paste may aid the treatment of severe bleeding, even in individuals with coagulopathies.")
     // will need stop words filtering
     console.log(words)
