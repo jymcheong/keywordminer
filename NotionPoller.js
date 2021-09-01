@@ -61,7 +61,7 @@ const PollPages = async () => {
         trackPageIDs(data.results)
     }
 }
-//https://www.notion.so/jymcheong/Track-Job-Applications-With-Notion-API-Node-js-and-FastifyJS-bf1880e9853e40448a0d9e0f9e3dea81
+
 const getPage = async (page_id) => {
     return new Promise(async function(resolve) {
         let text = ""
