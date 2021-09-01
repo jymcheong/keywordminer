@@ -48,3 +48,16 @@ function done(err, file) {
     }
   })
 }
+
+async function start(inFilePath, odbSession){
+  return new Promise(async(resolve, reject) => {
+    try { 
+      let total = await computeUniqueness(inFilePath);
+      updateCapturedFile(odbSession,inFilePath,total)
+      resolve(total)
+    }
+    catch(err){
+      reject(err)
+    }
+  })
+}
