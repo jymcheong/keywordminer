@@ -110,7 +110,16 @@ async function newPageHandler(newEvent) {
     odb.startLiveQuery("select from Entry", newPageHandler)
     setInterval(()=>{ PollPages() }, 20000) */
     
-    let words = await extractor.extract("Tissue adhesives do not normally perform well on tissues that are covered with blood or other bodily fluids. Here we report the design, adhesion mechanism and performance of a paste that haemostatically seals tissues in less than 15 s, independently of the blood-coagulation rate. With a design inspired by barnacle glue (which strongly adheres to wet and contaminated surfaces owing to adhesive proteins embedded in a lipid-rich matrix), the paste consists of a blood-repelling hydrophobic oil matrix containing embedded microparticles that covalently crosslink with tissue surfaces on the application of gentle pressure. It slowly resorbs over weeks, sustains large pressures (approximately 350 mm Hg of burst pressure in a sealed porcine aorta), makes tough (interfacial toughness of 150–300 J m−2) and strong (shear and tensile strengths of, respectively, 40–70 kPa and 30–50 kPa) interfaces with blood-covered tissues, and outperforms commercial haemostatic agents in the sealing of bleeding porcine aortas ex vivo and of bleeding heart and liver tissues in live rats and pigs. The paste may aid the treatment of severe bleeding, even in individuals with coagulopathies.")
-    // will need stop words filtering
+    let words = await extractor.extract("Cancer affects millions of Americans, and the number of cases is steadily rising. \
+    The increase in diagnosis of cancer cases comes with an associated increase in personal and economic burden. \
+    Earlier detection can improve treatment outcomes and may reduce the burden of cancer. Screening for cervical cancer \
+    is a good example of the potential of effective screening methods to dramatically reduce the morbidity and mortality associated \
+    with cancer. However, many current screening methods have high false-positive rates, increasing the concern for overdiagnosis and \
+    overtreatment. Blood-based tests capable of detecting multiple types of cancer represent an emerging approach to early cancer detection. \
+    Although there are several single-cancer detection tests in development, multicancer screening tests have greater potential to allow \
+    for widespread screening in the general population. Three multicancer screening tests are being validated in ongoing clinical trials, \
+    including the CancerSEEK assay, the Galleri test, and the PanSeer assay, all of which show high specificity in preliminary findings. \
+    Further validation is required before multicancer detection tests are incorporated into general population cancer screening.")
+    // will need stop VERB filtering
     console.log(words)
 })()
