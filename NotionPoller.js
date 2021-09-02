@@ -99,7 +99,8 @@ async function newPageHandler(newEvent) {
     if(newEvent['operation'] != 1) return; 
     // TODO
     // - use page id, getPage
-    // - extract words from getPage content 
+    // - extract words from getPage content
+    // use words output, call ODB function
 }
 
 (async () => {
