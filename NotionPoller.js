@@ -89,37 +89,23 @@ const getPage = async (page_id) => {
     })
 }
 
-const test = async () => {
-    let t = await getPage('b1b57324db24495eb36a08d51e0726fc')
-    console.log(t)
-}
-
 async function newPageHandler(newEvent) {
     // only interested in CREATED event ie. operations = 1
     if(newEvent['operation'] != 1) return; 
     // TODO
-    // - use page id, getPage
-    // - extract words from getPage content
     // use words output, call ODB function
+    console.log(newEvent['data']['id'])
+    let text = await getPage(newEvent['data']['id'])
+    console.log(text)
+    let words = await extractor.extract(text)
+    console.log(words)
+    odbSession.query('select LinkEntry(:r,:kw)',{ params : {r: newEvent['data']['@rid'], kw:words}})
 }
 
 (async () => {
-    /*const odb = new (require('./odb').Odb)();
+    const odb = new (require('./odb').Odb)();
     odbSession = await odb.startSession()
     console.log("ODB session started!")
     odb.startLiveQuery("select from Entry", newPageHandler)
-    setInterval(()=>{ PollPages() }, 20000) */
-    
-    let words = await extractor.extract("Cancer affects millions of Americans, and the number of cases is steadily rising. \
-    The increase in diagnosis of cancer cases comes with an associated increase in personal and economic burden. \
-    Earlier detection can improve treatment outcomes and may reduce the burden of cancer. Screening for cervical cancer \
-    is a good example of the potential of effective screening methods to dramatically reduce the morbidity and mortality associated \
-    with cancer. However, many current screening methods have high false-positive rates, increasing the concern for overdiagnosis and \
-    overtreatment. Blood-based tests capable of detecting multiple types of cancer represent an emerging approach to early cancer detection. \
-    Although there are several single-cancer detection tests in development, multicancer screening tests have greater potential to allow \
-    for widespread screening in the general population. Three multicancer screening tests are being validated in ongoing clinical trials, \
-    including the CancerSEEK assay, the Galleri test, and the PanSeer assay, all of which show high specificity in preliminary findings. \
-    Further validation is required before multicancer detection tests are incorporated into general population cancer screening.")
-    // will need stop VERB filtering
-    console.log(words)
+    setInterval(()=>{ PollPages() }, 3000) 
 })()
