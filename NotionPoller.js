@@ -92,15 +92,12 @@ const getPage = async (page_id) => {
 async function newPageHandler(newEvent) {
     // only interested in CREATED event ie. operations = 1
     if(newEvent['operation'] != 1) return; 
-    // TODO
-    // use words output, call ODB function
     console.log(newEvent['data']['id'])
     let text = await getPage(newEvent['data']['id'])
     console.log(text)
     let words = await extractor.extract(text)
     console.log(words)
-    if(words.length > 0)
-        odbSession.query('select LinkEntry(:r,:kw)',{ params : {r: newEvent['data']['@rid'], kw:words}})
+    if(words.length > 0) odbSession.query('select LinkEntry(:r,:kw)',{ params : {r: newEvent['data']['@rid'], kw:words}})
 }
 
 (async () => {
