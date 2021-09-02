@@ -99,7 +99,8 @@ async function newPageHandler(newEvent) {
     console.log(text)
     let words = await extractor.extract(text)
     console.log(words)
-    odbSession.query('select LinkEntry(:r,:kw)',{ params : {r: newEvent['data']['@rid'], kw:words}})
+    if(words.length > 0)
+        odbSession.query('select LinkEntry(:r,:kw)',{ params : {r: newEvent['data']['@rid'], kw:words}})
 }
 
 (async () => {
