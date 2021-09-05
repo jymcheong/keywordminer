@@ -38,6 +38,7 @@ const trackPageIDs = async (pages) => {
         g_PageQ.push(pages[i].id)
         console.log('enQ ' + pages[i].id)
         let p = pages[i]
+        p.url = p.url.replace('https://www.notion.so',process.env.NOTION_URL_REWRITE)
         delete p.properties
         delete p.parent
         delete p.icon
@@ -105,5 +106,5 @@ async function newPageHandler(newEvent) {
     odbSession = await odb.startSession()
     console.log("ODB session started!")
     odb.startLiveQuery("select from Entry", newPageHandler)
-    setInterval(()=>{ PollPages() }, 3000) 
+    setInterval(()=>{ PollPages() }, 10000) 
 })()
