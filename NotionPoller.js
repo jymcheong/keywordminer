@@ -52,6 +52,7 @@ const PollPages = async () => {
     let data = await notion.databases.query({
         // need to configure via "Share" so as to add API integration
         // see https://developers.notion.com/docs/getting-started#step-1-create-an-integration
+        // also use "Share" to copy URL to view the page or database id
         database_id: process.env.DB_ID
     });
     console.log(data.results.length)
