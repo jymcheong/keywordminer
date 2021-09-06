@@ -53,14 +53,14 @@ const PollPages = async () => {
         // need to configure via "Share" so as to add API integration
         // see https://developers.notion.com/docs/getting-started#step-1-create-an-integration
         // also use "Share" to copy URL to view the page or database id
-        database_id: process.env.DB_ID
+        database_id: process.env.NOTION_DB_ID
     });
     console.log(data.results.length)
     trackPageIDs(data.results)
     console.log(data)
     while(data.has_more){
         data = await notion.databases.query({
-            database_id: process.env.DB_ID,
+            database_id: process.env.NOTION_DB_ID,
             start_cursor: data.next_cursor
         });
         trackPageIDs(data.results)
