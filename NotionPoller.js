@@ -50,6 +50,7 @@ const trackPageIDs = async (pages) => {
 
 const PollPages = async () => {
     let data = await notion.databases.query({
+        // need to configure via "Share" so as to add API integration
         database_id: process.env.DB_ID
     });
     console.log(data.results.length)
