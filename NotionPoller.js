@@ -5,9 +5,12 @@
 const { Client } = require('@notionhq/client');
 const extractor = require('./extractor.js');
 require('dotenv').config();
+const TelegramBot = require('node-telegram-bot-api')
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true })
 
 var g_PageIDs = {}
 var g_PageQ = []
+var g_chatID = null
 var odbSession = null
 
 const notion = new Client({
@@ -93,6 +96,13 @@ const getPage = async (page_id) => {
     })
 }
 
+bot.onText(/start/, (msg, match) => {
+	g_chatID = msg.chat.id
+	console.log('saved chat id ' + g_chatID)
+    console.log(msg.chat.id)
+	bot.sendMessage(g_chatID, 'Yes SIR! Reporting keyword extraction to you! Sir!')
+})
+
 async function newPageHandler(newEvent) {
     // only interested in CREATED event ie. operations = 1
     if(newEvent['operation'] != 1) return; 
@@ -101,6 +111,7 @@ async function newPageHandler(newEvent) {
     console.log(text)
     let words = await extractor.extract(text)
     console.log(words)
+    if(g_chatID) bot.sendMessage(g_chatID, 'Extracted from ' + newEvent['data']['url'] + ' : ' + words)
     if(words.length > 0) odbSession.query('select LinkEntry(:r,:kw)',{ params : {r: newEvent['data']['@rid'], kw:words}})
 }
 
@@ -109,5 +120,5 @@ async function newPageHandler(newEvent) {
     odbSession = await odb.startSession()
     console.log("ODB session started!")
     odb.startLiveQuery("select from Entry", newPageHandler)
-    setInterval(()=>{ PollPages() }, 10000) 
+    setInterval(()=>{ PollPages() }, 30000) 
 })()
