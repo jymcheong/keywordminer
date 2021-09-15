@@ -120,5 +120,6 @@ async function newPageHandler(newEvent) {
     odbSession = await odb.startSession()
     console.log("ODB session started!")
     odb.startLiveQuery("select from Entry", newPageHandler)
+    PollPages()
     setInterval(()=>{ PollPages() }, 30000) 
 })()
